@@ -24,7 +24,7 @@ export default function Footer() {
             className="text-center md:text-left"
           >
             <p className="text-gray-400">
-              © {currentYear} Your Name. Made with{' '}
+              © {currentYear} Tanmay. Made with{' '}
               <FaHeart className="inline text-red-500 mx-1" /> and passion.
             </p>
           </motion.div>
