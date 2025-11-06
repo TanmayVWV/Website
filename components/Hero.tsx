@@ -119,7 +119,7 @@ export default function Hero() {
             <motion.a
               whileHover={{ scale: 1.2, y: -5 }}
               whileTap={{ scale: 0.9 }}
-              href="mailto:your.email@example.com"
+              href="mailto:tanmayp9q@gmail.com"
               className="text-3xl text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
             >
               <FaEnvelope />

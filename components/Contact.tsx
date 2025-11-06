@@ -10,14 +10,43 @@ export default function Contact() {
     email: '',
     message: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // Reset form
-    setFormData({ name: '', email: '', message: '' });
-    alert('Thank you for your message! I will get back to you soon.');
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+        // Reset status message after 5 seconds
+        setTimeout(() => setSubmitStatus('idle'), 5000);
+      } else {
+        setSubmitStatus('error');
+        // Reset error message after 5 seconds
+        setTimeout(() => setSubmitStatus('idle'), 5000);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+      // Reset error message after 5 seconds
+      setTimeout(() => setSubmitStatus('idle'), 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -31,19 +60,19 @@ export default function Contact() {
     {
       icon: <FaEnvelope />,
       label: 'Email',
-      value: 'your.email@example.com',
-      link: 'mailto:your.email@example.com',
+      value: 'tanmayp9q@gmail.com',
+      link: 'mailto:tanmayp9q@gmail.com',
     },
     {
       icon: <FaPhone />,
       label: 'Phone',
-      value: '+1 (234) 567-8900',
-      link: 'tel:+12345678900',
+      value: '639 384 6472',
+      link: 'tel:+16393846472',
     },
     {
       icon: <FaMapMarkerAlt />,
       label: 'Location',
-      value: 'Your City, Country',
+      value: 'Saskatoon, Canada',
       link: '#',
     },
   ];
@@ -189,7 +218,7 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-slate-700 text-gray-800 dark:text-gray-200"
-                  placeholder="your.email@example.com"
+                  placeholder="your.email@gmail.com"
                 />
               </div>
 
@@ -214,12 +243,25 @@ export default function Contact() {
 
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full px-8 py-4 bg-gradient-to-r from-primary-600 to-purple-600 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-shadow"
+                disabled={isSubmitting}
+                whileHover={!isSubmitting ? { scale: 1.05 } : {}}
+                whileTap={!isSubmitting ? { scale: 0.95 } : {}}
+                className={`w-full px-8 py-4 bg-gradient-to-r from-primary-600 to-purple-600 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-shadow ${
+                  isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
               >
-                Send Message
+                {isSubmitting ? 'Sending...' : submitStatus === 'success' ? 'Message Sent!' : submitStatus === 'error' ? 'Error - Try Again' : 'Send Message'}
               </motion.button>
+              {submitStatus === 'success' && (
+                <p className="text-green-600 dark:text-green-400 text-sm text-center">
+                  Thank you! Your message has been sent successfully.
+                </p>
+              )}
+              {submitStatus === 'error' && (
+                <p className="text-red-600 dark:text-red-400 text-sm text-center">
+                  Something went wrong. Please try again or contact me directly at tanmayp9q@gmail.com
+                </p>
+              )}
             </form>
           </motion.div>
         </div>
