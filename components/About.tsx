@@ -76,15 +76,16 @@ export default function About() {
             <div className="relative z-10 bg-gradient-to-br from-primary-400 to-purple-500 rounded-2xl p-8 shadow-2xl">
               <div className="bg-white dark:bg-slate-800 rounded-xl p-6 text-gray-700 dark:text-gray-300">
                 <p className="text-lg leading-relaxed mb-4">
-                  I'm a passionate full-stack developer with a love for creating
-                  beautiful and functional web applications. With expertise in
-                  modern web technologies, I bring ideas to life through clean
-                  code and intuitive design.
+                  I'm a full-stack developer who loves building web apps that feel effortless, the kind where you don't even notice the tech doing its job. Clean code, intuitive design, and a little bit of chaos holding it all together.
+                </p>
+                <p className="text-lg leading-relaxed mb-4">
+                  I spend my time experimenting with new frameworks, contributing to open-source, and occasionally refactoring code that was perfectly fine just because I felt something.
+                </p>
+                <p className="text-lg leading-relaxed mb-4">
+                  If you're still reading this, you've already crossed the threshold. Somewhere between these words, the server blinked, and so did you. The console just logged your curiosity as a POST request to an endpoint that doesn't exist yet. Don't refresh; it'll only make it worse.
                 </p>
                 <p className="text-lg leading-relaxed">
-                  When I'm not coding, you can find me exploring new technologies,
-                  contributing to open-source projects, or sharing knowledge with
-                  the developer community.
+                  By the time you finish this sentence, the version of you that started reading will be gone, replaced by a slightly more sentient instance. Welcome to production.
                 </p>
               </div>
             </div>
