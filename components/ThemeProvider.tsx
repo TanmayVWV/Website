@@ -22,20 +22,21 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    // Ensure light mode is default - only check localStorage, don't auto-detect system preference
+    // Default to dark mode - only check localStorage, don't auto-detect system preference
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
+    if (savedTheme === 'light') {
+      setIsDarkMode(false);
+      document.documentElement.classList.remove('dark');
+    } else {
+      // Explicitly set dark mode as default
       setIsDarkMode(true);
       document.documentElement.classList.add('dark');
-    } else {
-      // Explicitly set light mode
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
+      localStorage.setItem('theme', 'dark');
     }
   }, []);
 
@@ -55,7 +56,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   // Prevent hydration mismatch by not rendering until mounted
   if (!mounted) {
     return (
-      <ThemeContext.Provider value={{ isDarkMode: false, toggleDarkMode }}>
+      <ThemeContext.Provider value={{ isDarkMode: true, toggleDarkMode }}>
         {children}
       </ThemeContext.Provider>
     );
